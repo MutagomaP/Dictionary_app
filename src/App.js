@@ -4,17 +4,26 @@
  */
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SearchHistoryProvider } from './context/SearchHistoryContext';
 import DrawerNavigator from './navigation/DrawerNavigator';
+import { colors } from './utils/theme';
+
+const navigationTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: colors.background,
+  },
+};
 
 export default function App() {
   return (
     <SafeAreaProvider>
       {/* Global state: search history, word data, loading, errors */}
       <SearchHistoryProvider>
-        <NavigationContainer>
+        <NavigationContainer theme={navigationTheme}>
           <DrawerNavigator />
         </NavigationContainer>
         <StatusBar style="light" />

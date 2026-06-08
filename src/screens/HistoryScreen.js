@@ -11,7 +11,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import HistoryListItem from '../components/HistoryListItem';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -70,7 +69,7 @@ export default function HistoryScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerText}>
           <Text style={styles.title}>Search History</Text>
@@ -87,7 +86,11 @@ export default function HistoryScreen({ navigation }) {
       {loading ? <LoadingIndicator message="Loading word..." /> : null}
 
       {error && !loading ? (
-        <ErrorMessage error={error} onRetry={retry} />
+        <ErrorMessage
+          error={error}
+          onRetry={retry}
+          showRetry={error.name !== 'ValidationError'}
+        />
       ) : null}
 
       {!loading && history.length === 0 ? (
@@ -115,7 +118,7 @@ export default function HistoryScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing } from '../utils/theme';
 
 const TABS = {
@@ -11,10 +11,9 @@ const TABS = {
 };
 
 export default function CustomTabBar({ state, navigation }) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.tabBar, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}>
+    <SafeAreaView edges={['bottom']} style={styles.safeArea}>
+      <View style={styles.tabBar}>
       {state.routes.map((route, index) => {
         const isFocused = state.index === index;
         const tab = TABS[route.name];
@@ -52,17 +51,22 @@ export default function CustomTabBar({ state, navigation }) {
           </Pressable>
         );
       })}
-    </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: colors.tabBar,
+  },
   tabBar: {
     alignItems: 'center',
     backgroundColor: colors.tabBar,
     borderTopColor: colors.border,
     borderTopWidth: 1,
     flexDirection: 'row',
+    paddingBottom: spacing.xs,
     paddingTop: spacing.sm,
   },
   tabItem: {

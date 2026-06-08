@@ -94,6 +94,7 @@ function MainTabs() {
       tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
         headerShown: false,
+        sceneContainerStyle: { backgroundColor: colors.background },
       }}
     >
       <Tab.Screen name="SearchTab" component={SearchStack} />

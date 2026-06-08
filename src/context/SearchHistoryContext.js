@@ -31,7 +31,10 @@ export function SearchHistoryProvider({ children }) {
 
     loadSearchHistory().then((saved) => {
       if (active) {
-        setHistory(saved);
+        const validHistory = saved.filter(
+          (word) => validateSearchInput(word).isValid
+        );
+        setHistory(validHistory);
         setHistoryReady(true);
       }
     });

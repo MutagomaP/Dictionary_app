@@ -4,7 +4,6 @@
  */
 import React, { useLayoutEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AudioButton from '../components/AudioButton';
 import LoadingIndicator from '../components/LoadingIndicator';
 import MeaningCard from '../components/MeaningCard';
@@ -39,26 +38,26 @@ export default function WordDetailScreen({ navigation, route }) {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <LoadingIndicator
           message={selectedWord ? `Loading "${selectedWord}"...` : 'Loading word...'}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 
   if (!wordData || wordData.length === 0) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.empty}>
           <Text style={styles.emptyText}>No word data available.</Text>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <View style={styles.container}>
       <ScrollView
         ref={scrollRef}
         key={selectedWord}
@@ -76,7 +75,7 @@ export default function WordDetailScreen({ navigation, route }) {
           />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

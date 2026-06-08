@@ -3,8 +3,7 @@
  * and navigates to WordDetailScreen on success.
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -53,7 +52,7 @@ export default function SearchScreen({ navigation }) {
     (error && error.name !== 'ValidationError' ? error : null);
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <View style={styles.container}>
       <View style={styles.hero}>
         <View style={styles.heroIcon}>
           <Ionicons name="book-outline" size={32} color={colors.primary} />
@@ -71,6 +70,7 @@ export default function SearchScreen({ navigation }) {
           onChangeText={(text) => {
             setQuery(text);
             if (validationError) setValidationError(null);
+            if (error) clearError();
           }}
           onSearch={handleSearch}
         />
@@ -100,15 +100,17 @@ export default function SearchScreen({ navigation }) {
             color={colors.primary}
             style={styles.hintIcon}
           />
-          <Text style={styles.hintText}>
-            Try searching for words like{' '}
-            <Text style={styles.hintWord}>hello</Text>,{' '}
-            <Text style={styles.hintWord}>dictionary</Text>, or{' '}
+          <Text style={styles.hintLead}>Try searching for words like</Text>
+          <View style={styles.hintWordsRow}>
+            <Text style={styles.hintWord}>hello</Text>
+            <Text style={styles.hintMuted}>, </Text>
+            <Text style={styles.hintWord}>dictionary</Text>
+            <Text style={styles.hintMuted}>, or </Text>
             <Text style={styles.hintWord}>beautiful</Text>
-          </Text>
+          </View>
         </View>
       ) : null}
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -167,7 +169,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     flex: 1,
     justifyContent: 'center',
-    marginBottom: spacing.md,
     marginTop: spacing.sm,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.xl,
@@ -175,15 +176,31 @@ const styles = StyleSheet.create({
   hintIcon: {
     marginBottom: spacing.md,
   },
-  hintText: {
+  hintLead: {
     color: colors.textMuted,
     fontSize: 15,
-    lineHeight: 24,
+    lineHeight: 22,
+    marginBottom: spacing.xs,
     textAlign: 'center',
+    ...Platform.select({ android: { includeFontPadding: false } }),
+  },
+  hintWordsRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  hintMuted: {
+    color: colors.textMuted,
+    fontSize: 15,
+    lineHeight: 22,
+    ...Platform.select({ android: { includeFontPadding: false } }),
   },
   hintWord: {
     color: colors.primary,
+    fontSize: 15,
     fontStyle: 'italic',
-    fontWeight: '600',
+    lineHeight: 22,
+    ...Platform.select({ android: { includeFontPadding: false } }),
   },
 });

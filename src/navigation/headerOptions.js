@@ -2,6 +2,9 @@ import { colors, spacing } from '../utils/theme';
 
 /** Shared stack / drawer header styling with comfortable spacing. */
 export const stackHeaderOptions = {
+  contentStyle: {
+    backgroundColor: colors.background,
+  },
   headerStyle: {
     backgroundColor: colors.primary,
     elevation: 0,

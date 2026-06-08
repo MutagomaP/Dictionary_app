@@ -3,13 +3,12 @@
  */
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing } from '../utils/theme';
 
 export default function BookmarksScreen() {
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <View style={styles.container}>
       <View style={styles.empty}>
         <View style={styles.iconWrap}>
           <Ionicons name="bookmark-outline" size={40} color={colors.primary} />
@@ -19,7 +18,7 @@ export default function BookmarksScreen() {
           Save words here to find them quickly later.
         </Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -2,24 +2,33 @@
  * Validates search input before making an API request.
  * Allows a single English word (letters, hyphens, apostrophes).
  */
-import { validationMessages } from './errorMessages';
+import { validationMessages } from './errorMessages.js';
 
 // Letters plus hyphen/apostrophe for words like "well-being" or "don't"
 const SINGLE_WORD_PATTERN = /^[a-zA-Z]+(?:[-'][a-zA-Z]+)*$/;
 
-const QUOTE_PAIRS = {
-  '"': '"',
-  "'": "'",
-  '\u201C': '\u201D', // “
-  '\u2018': '\u2019', // ‘
-};
-
 function isQuoteChar(char) {
-  return char in QUOTE_PAIRS || char === '"' || char === "'";
+  const code = char.charCodeAt(0);
+  return (
+    code === 34 ||
+    code === 39 ||
+    code === 0x201c ||
+    code === 0x201d ||
+    code === 0x2018 ||
+    code === 0x2019
+  );
 }
 
 function areMatchingQuotes(open, close) {
-  return QUOTE_PAIRS[open] === close;
+  const openCode = open.charCodeAt(0);
+  const closeCode = close.charCodeAt(0);
+
+  return (
+    (openCode === 34 && closeCode === 34) ||
+    (openCode === 39 && closeCode === 39) ||
+    (openCode === 0x201c && closeCode === 0x201d) ||
+    (openCode === 0x2018 && closeCode === 0x2019)
+  );
 }
 
 /**
