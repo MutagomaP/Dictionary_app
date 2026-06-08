@@ -10,6 +10,8 @@ export const validationMessages = {
     'It looks like you entered numbers. Try an English word instead, like hello or beautiful.',
   invalidCharacters:
     'That doesn’t look quite right. Use letters only — for example, dictionary or world.',
+  invalidQuotes:
+    'Your quotes don’t match. Type the word without quotes, or wrap it fully — like beautiful or "beautiful".',
 };
 
 export const apiMessages = {

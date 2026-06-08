@@ -59,7 +59,7 @@ export default function SearchScreen({ navigation }) {
           <Ionicons name="book" size={28} color={colors.primary} />
         </View>
         <Text style={styles.company}>LexiTech Solutions Ltd</Text>
-        <Text style={styles.title}>Dictionary Mobile App</Text>
+        <Text style={styles.title}>LexiTech Dictionary</Text>
         <Text style={styles.subtitle}>
           Search English words and explore their meanings
         </Text>
