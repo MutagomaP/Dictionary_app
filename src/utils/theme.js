@@ -2,13 +2,16 @@ import { Platform } from 'react-native';
 
 /** Shared colors, spacing, and shadow styles used across the app. */
 export const colors = {
-  primary: '#4F46E5',
-  primaryLight: '#EEF2FF',
-  background: '#F8FAFC',
+  primary: '#5B5FEF',
+  primaryDark: '#4F46E5',
+  primaryLight: '#EEF0FF',
+  primaryMuted: '#C7CCFF',
+  background: '#F5F6FA',
   card: '#FFFFFF',
-  text: '#1E293B',
-  textMuted: '#64748B',
+  text: '#1A1D26',
+  textMuted: '#6B7280',
   border: '#E2E8F0',
+  tabBar: '#FFFFFF',
   error: '#DC2626',
   errorBg: '#FEF2F2',
 };

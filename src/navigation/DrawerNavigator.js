@@ -1,24 +1,42 @@
 /**
  * App navigation structure:
  *   Drawer (custom sidebar with history)
- *     ├── Search (Stack) → SearchHome, WordDetail
- *     └── History
+ *     └── Main (Bottom Tabs)
+ *           ├── SearchTab (Stack) → SearchHome, WordDetail
+ *           ├── HistoryTab → HistoryScreen
+ *           └── BookmarksTab → BookmarksScreen
  */
 import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
 import SearchScreen from '../screens/SearchScreen';
 import WordDetailScreen from '../screens/WordDetailScreen';
 import HistoryScreen from '../screens/HistoryScreen';
+import BookmarksScreen from '../screens/BookmarksScreen';
 import CustomDrawerContent from '../components/CustomDrawerContent';
+import CustomTabBar from '../components/CustomTabBar';
 import DrawerMenuButton from '../components/DrawerMenuButton';
 import HeaderBackButton from '../components/HeaderBackButton';
-import { stackHeaderOptions } from './headerOptions';
+import HeaderSearchButton from '../components/HeaderSearchButton';
+import { APP_HEADER_TITLE, stackHeaderOptions } from './headerOptions';
 import { colors } from '../utils/theme';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function getMainHeaderOptions(navigation) {
+  return {
+    title: APP_HEADER_TITLE,
+    headerLeft: () => (
+      <DrawerMenuButton navigation={navigation} align="left" />
+    ),
+    headerRight: () => (
+      <HeaderSearchButton navigation={navigation} />
+    ),
+  };
+}
 
 function SearchStack() {
   return (
@@ -26,28 +44,62 @@ function SearchStack() {
       <Stack.Screen
         name="SearchHome"
         component={SearchScreen}
-        options={({ navigation }) => ({
-          title: 'Search',
-          headerLeft: () => (
-            <DrawerMenuButton navigation={navigation} align="left" />
-          ),
-        })}
+        options={({ navigation }) => getMainHeaderOptions(navigation)}
       />
       <Stack.Screen
         name="WordDetail"
         component={WordDetailScreen}
         options={({ navigation, route }) => ({
-          title: route.params?.word || 'Search',
+          title: route.params?.word || APP_HEADER_TITLE,
           headerLeft: () => (
             <HeaderBackButton navigation={navigation} />
           ),
           headerBackVisible: false,
           headerRight: () => (
-            <DrawerMenuButton navigation={navigation} align="right" />
+            <HeaderSearchButton navigation={navigation} />
           ),
         })}
       />
     </Stack.Navigator>
+  );
+}
+
+function HistoryStack() {
+  return (
+    <Stack.Navigator screenOptions={stackHeaderOptions}>
+      <Stack.Screen
+        name="HistoryHome"
+        component={HistoryScreen}
+        options={({ navigation }) => getMainHeaderOptions(navigation)}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function BookmarksStack() {
+  return (
+    <Stack.Navigator screenOptions={stackHeaderOptions}>
+      <Stack.Screen
+        name="BookmarksHome"
+        component={BookmarksScreen}
+        options={({ navigation }) => getMainHeaderOptions(navigation)}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function MainTabs() {
+  return (
+    <Tab.Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen name="SearchTab" component={SearchStack} />
+      <Tab.Screen name="HistoryTab" component={HistoryStack} />
+      <Tab.Screen name="BookmarksTab" component={BookmarksStack} />
+    </Tab.Navigator>
   );
 }
 
@@ -56,7 +108,6 @@ export default function DrawerNavigator() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        ...stackHeaderOptions,
         drawerActiveTintColor: colors.primary,
         drawerInactiveTintColor: colors.textMuted,
         drawerType: 'front',
@@ -67,28 +118,12 @@ export default function DrawerNavigator() {
       }}
     >
       <Drawer.Screen
-        name="Search"
-        component={SearchStack}
+        name="Main"
+        component={MainTabs}
         options={{
-          title: 'Search',
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="search" size={size} color={color} />
-          ),
+          title: 'LexiTech Dictionary',
           headerShown: false,
         }}
-      />
-      <Drawer.Screen
-        name="History"
-        component={HistoryScreen}
-        options={({ navigation }) => ({
-          title: 'History',
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="time" size={size} color={color} />
-          ),
-          headerLeft: () => (
-            <DrawerMenuButton navigation={navigation} align="left" />
-          ),
-        })}
       />
     </Drawer.Navigator>
   );

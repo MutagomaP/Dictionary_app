@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, shadows, spacing } from '../utils/theme';
+import { colors, spacing } from '../utils/theme';
 
 export default function SearchBar({
   value,
@@ -38,7 +38,13 @@ export default function SearchBar({
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <Pressable style={styles.button} onPress={onSearch}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            pressed && styles.buttonPressed,
+          ]}
+          onPress={onSearch}
+        >
           <Text style={styles.buttonText}>Search</Text>
         </Pressable>
       </View>
@@ -56,11 +62,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: colors.card,
+    borderColor: colors.border,
     borderRadius: 14,
+    borderWidth: 1,
     flexDirection: 'row',
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.xs,
-    ...shadows.card,
   },
   icon: {
     marginRight: spacing.sm,
@@ -73,10 +80,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: colors.primary,
-    borderRadius: 8,
+    borderRadius: 10,
     marginLeft: spacing.sm,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
+  },
+  buttonPressed: {
+    backgroundColor: colors.primaryDark,
   },
   buttonText: {
     color: colors.card,

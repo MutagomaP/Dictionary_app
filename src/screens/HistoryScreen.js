@@ -41,7 +41,7 @@ export default function HistoryScreen({ navigation }) {
     if (pendingNavigation.current && wordData && !loading && !error) {
       const word = pendingNavigation.current;
       pendingNavigation.current = null;
-      navigation.navigate('Search', {
+      navigation.navigate('SearchTab', {
         screen: 'WordDetail',
         params: { word },
       });

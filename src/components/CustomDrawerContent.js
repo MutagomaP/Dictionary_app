@@ -18,9 +18,12 @@ export default function CustomDrawerContent(props) {
     navigation.closeDrawer();
     const result = await searchWord(word);
     if (result?.success) {
-      navigation.navigate('Search', {
-        screen: 'WordDetail',
-        params: { word },
+      navigation.navigate('Main', {
+        screen: 'SearchTab',
+        params: {
+          screen: 'WordDetail',
+          params: { word },
+        },
       });
     }
   };
@@ -68,7 +71,10 @@ export default function CustomDrawerContent(props) {
           activeTintColor={colors.primary}
           inactiveTintColor={colors.textMuted}
           onPress={() =>
-            navigation.navigate('Search', { screen: 'SearchHome' })
+            navigation.navigate('Main', {
+              screen: 'SearchTab',
+              params: { screen: 'SearchHome' },
+            })
           }
         />
         <DrawerItem
@@ -80,7 +86,9 @@ export default function CustomDrawerContent(props) {
           style={styles.drawerItem}
           activeTintColor={colors.primary}
           inactiveTintColor={colors.textMuted}
-          onPress={() => navigation.navigate('History')}
+          onPress={() =>
+            navigation.navigate('Main', { screen: 'HistoryTab' })
+          }
         />
       </View>
 

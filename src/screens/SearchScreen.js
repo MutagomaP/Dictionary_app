@@ -11,7 +11,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import ErrorMessage from '../components/ErrorMessage';
 import { useDictionary } from '../hooks/useDictionary';
 import { validateSearchInput } from '../utils/validators';
-import { colors, shadows, spacing } from '../utils/theme';
+import { colors, spacing } from '../utils/theme';
 
 export default function SearchScreen({ navigation }) {
   const [query, setQuery] = useState('');
@@ -56,7 +56,7 @@ export default function SearchScreen({ navigation }) {
     <SafeAreaView style={styles.container} edges={['bottom']}>
       <View style={styles.hero}>
         <View style={styles.heroIcon}>
-          <Ionicons name="book" size={28} color={colors.primary} />
+          <Ionicons name="book-outline" size={32} color={colors.primary} />
         </View>
         <Text style={styles.company}>LexiTech Solutions Ltd</Text>
         <Text style={styles.title}>LexiTech Dictionary</Text>
@@ -96,12 +96,15 @@ export default function SearchScreen({ navigation }) {
         <View style={styles.hint}>
           <Ionicons
             name="bulb-outline"
-            size={22}
+            size={28}
             color={colors.primary}
             style={styles.hintIcon}
           />
           <Text style={styles.hintText}>
-            Try searching for words like hello, dictionary, or beautiful
+            Try searching for words like{' '}
+            <Text style={styles.hintWord}>hello</Text>,{' '}
+            <Text style={styles.hintWord}>dictionary</Text>, or{' '}
+            <Text style={styles.hintWord}>beautiful</Text>
           </Text>
         </View>
       ) : null}
@@ -114,34 +117,32 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     flex: 1,
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    paddingTop: spacing.lg,
   },
   hero: {
     alignItems: 'center',
     marginBottom: spacing.xl,
-    paddingTop: spacing.md,
   },
   heroIcon: {
     alignItems: 'center',
     backgroundColor: colors.primaryLight,
-    borderRadius: 20,
-    height: 64,
+    borderRadius: 18,
+    height: 72,
     justifyContent: 'center',
     marginBottom: spacing.md,
-    width: 64,
-    ...shadows.card,
+    width: 72,
   },
   company: {
-    color: colors.primary,
-    fontSize: 12,
+    color: colors.text,
+    fontSize: 11,
     fontWeight: '600',
-    letterSpacing: 1,
-    marginBottom: spacing.xs,
+    letterSpacing: 1.2,
+    marginBottom: spacing.sm,
     textTransform: 'uppercase',
   },
   title: {
     color: colors.text,
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: '700',
     marginBottom: spacing.sm,
     textAlign: 'center',
@@ -160,22 +161,29 @@ const styles = StyleSheet.create({
   },
   hint: {
     alignItems: 'center',
-    backgroundColor: colors.card,
-    borderRadius: 14,
+    borderColor: colors.primaryMuted,
+    borderRadius: 16,
+    borderStyle: 'dashed',
+    borderWidth: 2,
     flex: 1,
     justifyContent: 'center',
-    marginBottom: spacing.lg,
+    marginBottom: spacing.md,
     marginTop: spacing.sm,
-    padding: spacing.lg,
-    ...shadows.card,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
   },
   hintIcon: {
-    marginBottom: spacing.sm,
+    marginBottom: spacing.md,
   },
   hintText: {
     color: colors.textMuted,
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 24,
     textAlign: 'center',
+  },
+  hintWord: {
+    color: colors.primary,
+    fontStyle: 'italic',
+    fontWeight: '600',
   },
 });

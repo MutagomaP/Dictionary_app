@@ -9,8 +9,8 @@ export const stackHeaderOptions = {
   },
   headerTintColor: colors.card,
   headerTitleStyle: {
-    fontWeight: '600',
-    fontSize: 18,
+    fontWeight: '700',
+    fontSize: 20,
   },
   headerTitleAlign: 'left',
   headerLeftContainerStyle: {
@@ -26,3 +26,5 @@ export const stackHeaderOptions = {
     paddingRight: spacing.lg,
   },
 };
+
+export const APP_HEADER_TITLE = 'Lexicon';
